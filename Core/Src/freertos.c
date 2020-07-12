@@ -25,6 +25,7 @@
 #include "cmsis_os.h"
 #include "console.h"
 #include "timers.h"
+#include "can.h"
 #include "controller.h"
 
 uint8_t ucHeap[configTOTAL_HEAP_SIZE] __attribute__((section("ccmram")));
@@ -129,6 +130,19 @@ void StartControllerTask(void *argument)
   for(;;)
   {
     controllerProcess(&state);
+    osDelay(50);
+  }
+}
+
+void StartCommunicationTask(void *argument)
+{
+
+  Log(eInfo, eCommunication, "Communication task starting up...");
+
+  /* Infinite loop */
+  for(;;)
+  {
+    CanProcess();
     osDelay(50);
   }
 }

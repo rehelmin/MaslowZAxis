@@ -1,72 +1,52 @@
 #include "OD.h"
 
-CO_OD_entry_t OD[12] = {
-	{0x6040, 0x00, 0x00, 2, (void*)&OD_RAM.controlWord},
-	{0x6041, 0x00, 0x00, 2, (void*)&OD_RAM.statusWord},
-	{0x6064, 0x00, 0x00, 4, (void*)&OD_RAM.positionActualValue},
-	{0x607c, 0x00, 0x00, 4, (void*)&OD_EEPROM.homeOffset},
+/***** Definition for ROM variables ********************************************/
+struct sCO_OD_ROM CO_OD_ROM = {
+           CO_OD_FIRST_LAST_WORD,
 
-}
+/*1000*/ 0x20000L,
+/*1005*/ 0x0080L,
+/*1006*/ 0x0000L,
+/*1007*/ 0x0000L,
+/*1008*/ {'R', 'D', 'r', 'i', 'v', 'e'},
+/*1009*/ {'0', '.', '0', '1'},
+/*100a*/ {'0', '.', '0', '1'},
+/*100c*/ 0x00,
+/*1012*/ 0x0000L,
+/*1014*/ 0x0080L,
+/*1015*/ 0x64,
+/*1016*/ {0x00000000, 0x00000000, 0x00000000, 0x00000000},
+/*1017*/ 0x3e8,
+/*1018*/ {0x4L, 0x0000L, 0x0000L, 0x0000L, 0x0000L},
+/*1019*/ 0x0L,
+/*1029*/ {0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+/*1200*/ {{0x2L, 0x0600L, 0x0580L}},
+/*1400*/ {{0x2L, 0x0200L, 0xfeL}},
+/*1600*/ {{0x6L, 0x60400010L, 0x60600008L, 0x607a0020L, 0x607a0020L, 0x60ff0020L, 0x60b20010L, 0x0000L, 0x0000L}},
+/*1800*/ {{0x6L, 0x0180L, 0xffL, 0x64, 0x0L, 0x00, 0x0L}},
+/*1a00*/ {{0x2L, 0x60410020L, 0x60610020L, 0x60640020L, 0x606c0020L, 0x60770010L, 0x0000L, 0x0000L, 0x0000L}},
 
-uint16_t CO_OD_find(CO_SDO_t *SDO, uint16_t index){
-    /* Fast search in ordered Object Dictionary. If indexes are mixed, this won't work. */
-    /* If Object Dictionary has up to 2^N entries, then N is max number of loop passes. */
-    uint16_t cur, min, max;
-    const CO_OD_entry_t* object;
+           CO_OD_FIRST_LAST_WORD,
+};
 
-    min = 0U;
-    max = SDO->ODSize - 1U;
-    while(min < max){
-        cur = (min + max) / 2;
-        object = &SDO->OD[cur];
-        /* Is object matched */
-        if(index == object->index){
-            return cur;
-        }
-        if(index < object->index){
-            max = cur;
-            if(max) max--;
-        }
-        else
-            min = cur + 1U;
-    }
 
-    if(min == max){
-        object = &SDO->OD[min];
-        /* Is object matched */
-        if(index == object->index){
-            return min;
-        }
-    }
-
-    return 0xFFFFU;  /* object does not exist in OD */
-}
-
-/******************************************************************************/
-void* CO_OD_getDataPointer(CO_SDO_t *SDO, uint16_t entryNo, uint8_t subIndex){
-    const CO_OD_entry_t* object = &SDO->OD[entryNo];
-
-    if(entryNo == 0xFFFFU){
-        return 0;
-    }
-
-    if(object->maxSubIndex == 0U){   /* Object type is Var */
-        return object->pData;
-    }
-    else if(object->attribute != 0U){/* Object type is Array */
-        if(subIndex==0){
-            /* this is the data, for the subIndex 0 in the array */
-            return (void*) &object->maxSubIndex;
-        }
-        else if(object->pData == 0){
-            /* data type is domain */
-            return 0;
-        }
-        else{
-            return (void*)(((int8_t*)object->pData) + ((subIndex-1) * object->length));
-        }
-    }
-    else{                            /* Object Type is Record */
-        return ((const CO_OD_entryRecord_t*)(object->pData))[subIndex].pData;
-    }
-}
+/***** Definition for RAM variables ********************************************/
+struct sCO_OD_RAM CO_OD_RAM = {
+           CO_OD_FIRST_LAST_WORD,
+  /* 1001 */ 0x0L,
+  /* 6040 */ 0x0000L,
+  /* 6041 */ 0x0000L,
+  /* 6062 */ 0x00000000L,
+  /* 6064 */ 0x00000000L,
+  /* 6071 */ 0x0000L,
+  /* 607a */ 0x00000000L,
+  /* 6044 */ 0x00000000L,
+  /* 6076 */ 0x00000000L,
+  /* 6077 */ 0x0000L,
+  /* 60b0 */ 0x00000000L,
+  /* 60b1 */ 0x00000000L,
+  /* 60b2 */ 0x0000L,
+  /* 60fa */ 0x00000000L,
+  /* 60fc */ 0x00000000L,
+  /* 60ff */ 0x00000000L,
+           CO_OD_FIRST_LAST_WORD

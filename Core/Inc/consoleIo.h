@@ -8,7 +8,7 @@
 
 typedef enum {CONSOLE_SUCCESS = 0u, CONSOLE_ERROR = 1u } eConsoleError;
 
-extern UART_HandleTypeDef huart2;
+extern UART_HandleTypeDef huart3;
 
 eConsoleError ConsoleIoInit(void);
 

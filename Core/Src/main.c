@@ -26,6 +26,7 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
+#include "console.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -98,6 +99,7 @@ int main(void)
   MX_SPI2_Init();
   MX_USART3_UART_Init();
   MX_TIM8_Init();
+  MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
   ConsoleInit();
 

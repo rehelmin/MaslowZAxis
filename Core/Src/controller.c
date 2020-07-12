@@ -100,7 +100,7 @@ eControllerResult_t controllerHandleNotReadyToSwitchOn(struct state * state)
 eControllerResult_t controllerHandleSwitchOnDisabled(struct state * state)
 {
 	controllerCurrentState = kSwitchOnDisabledState;
-	OD_driveStatusWord = (1 << STATUS_SWITCH_ON_DISABLE) | OD_driveStatusWord;
+	OD_driveStatusWord |= (1 << STATUS_SWITCH_ON_DISABLE);
 
 	/* Check bus voltage levels and send error code 0x3200 if they are too low */
 	/* Check that the vector offset is a valid value */

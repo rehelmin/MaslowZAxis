@@ -46,6 +46,7 @@ Core/Src/HAL/gpio.c \
 Core/Src/freertos.c \
 Core/Src/HAL/i2c.c \
 Core/Src/HAL/spi.c \
+Core/Src/HAL/can.c \
 Core/Src/HAL/dma.c \
 Core/Src/HAL/tim.c \
 Core/Src/HAL/usart.c \
@@ -54,7 +55,7 @@ Core/Src/HAL/stm32f4xx_hal_msp.c \
 Core/Src/HAL/stm32f4xx_hal_timebase_tim.c \
 Core/Src/console.c \
 Core/Src/consoleCommands.c \
-Core/Src/consoleIo.c \
+Core/Src/HAL/consoleIo.c \
 Core/Src/controller.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c \
@@ -71,13 +72,11 @@ Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sd.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hcd.c \
 Core/Src/system_stm32f4xx.c \
 Middlewares/Third_Party/FreeRTOS/Source/croutine.c \
 Middlewares/Third_Party/FreeRTOS/Source/event_groups.c \
@@ -94,7 +93,19 @@ Core/Src/SEGGER/SEGGER_SYSVIEW.c \
 Core/Src/SEGGER/SEGGER_SYSVIEW_FreeRTOS.c \
 Core/Src/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.c \
 Core/Src/heap_useNewlib.c \
-Core/Src/logging.c
+Core/Src/logging.c \
+Core/Src/communication/CANopen.c \
+Core/Src/communication/CO_driver.c \
+Core/Src/communication/CO_Emergency.c \
+Core/Src/communication/CO_HBconsumer.c \
+Core/Src/communication/CO_NMT_Heartbeat.c \
+Core/Src/communication/CO_OD.c \
+Core/Src/communication/CO_PDO.c \
+Core/Src/communication/CO_SDO.c \
+Core/Src/communication/CO_SDOmaster.c \
+Core/Src/communication/CO_SYNC.c \
+Core/Src/communication/CO_trace.c \
+Core/Src/communication/crc16-ccitt.c
 
 # ASM sources
 ASM_SOURCES =  \
@@ -162,7 +173,8 @@ C_INCLUDES =  \
 -IDrivers/CMSIS/Device/ST/STM32F4xx/Include \
 -IDrivers/CMSIS/Include \
 -ICore/Inc/SEGGER \
--ICore/Inc/HAL
+-ICore/Inc/HAL \
+-ICore/Inc/communication
 
 
 # compile gcc flags
